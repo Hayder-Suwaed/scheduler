@@ -14,6 +14,7 @@ import Show from "../src/components/Appointment/Show";
 import Confirm from "../src/components/Appointment/Confirm";
 import Status from "../src/components/Appointment/Status";
 import Error from "../src/components/Appointment/Error";
+import Form from "../src/components/Appointment/Form";
 import Button from "components/Button";
 // import index from "./src/components/Appointment/index"
 
@@ -101,7 +102,7 @@ const interviewers = [
 
 storiesOf("InterviewerList", module)
   .addParameters({
-    backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+    backgrounds: [{ name: "dark", value: "#222F3E", default: true }]
   })
   .add("Initial", () => (
     <InterviewerList
@@ -109,7 +110,14 @@ storiesOf("InterviewerList", module)
       setInterviewer={action("setInterviewer")}
     />
   ))
-  storiesOf("Appointment", module)
+  .add("Preselected", () => (
+    <InterviewerList
+      interviewers={interviewers}
+      interviewer={3}
+      setInterviewer={action("setInterviewer")}
+    />
+  ));
+storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
@@ -118,20 +126,20 @@ storiesOf("InterviewerList", module)
   .add("Header", () => <Header time="12pm" />)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
   .add("Show", () => <Show
-  student="Lydia Miller-Jones"
-  interviewer={interviewer}
-  onEdit={action("onEdit")}
-  onDelete={action("onDelete")}
-/>
-)
-.add("Confirm", () => (
-  <Confirm
-    message="Delete the appointment?"
-    onCancel={action("onCancel")}
-    onConfirm={action("onConfirm")}
-  />
-))
-.add("Status Saving", () => <Status message="Saving" />)
+      student="Lydia Miller-Jones"
+      interviewer={interviewer}
+      onEdit={action("onEdit")}
+      onDelete={action("onDelete")}
+    />
+  )
+  .add("Confirm", () => (
+    <Confirm
+      message="Delete the appointment?"
+      onCancel={action("onCancel")}
+      onConfirm={action("onConfirm")}
+    />
+  ))
+  .add("Status Saving", () => <Status message="Deleting" />)
   .add("Status Deleting", () => <Status message="Deleting" />)
   .add("Error deleting", () => (
     <Error
@@ -142,4 +150,21 @@ storiesOf("InterviewerList", module)
   .add("Error saving", () => (
     <Error message="Could not save appointment." onClose={action("onClose")} />
   ))
+  .add("Edit", () => (
+    <Form
+      name={"name"}
+      interviewers={interviewers}
+      interviewer={3}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />
+  ))
+  .add("Create", () => (
+    <Form
+      interviewers={interviewers}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />
+  ))
+ 
   
