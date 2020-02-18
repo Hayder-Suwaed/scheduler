@@ -2,47 +2,9 @@ import React, { useState, useEffect } from "react";
 import DayList from "components/DayList";
 import "components/Application.scss";
 import Appointment from "./Appointment";
-
+import getAppointmentsForDay from "../helpers/selectors";
 import axios from "axios";
 
-const appointments = [
-  {
-    id: 1,
-    time: "12pm"
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png"
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm"
-  },
-  {
-    id: 4,
-    time: "2:30pm",
-    interview: {
-      student: "James Truong",
-      interviewer: {
-        id: 5,
-        name: "Sven Jones",
-        avatar: "https://i.imgur.com/twYrpay.jpg"
-      }
-    }
-  },
-  {
-    id: 5,
-    time: "4pm"
-  }
-];
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -50,16 +12,30 @@ export default function Application(props) {
     days: [],
     appointments: {}
   });
-
+ 
+  const appointments = getAppointmentsForDay(state, state.day);
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
-  const setDays = (days) => setState((prev) => ({ ...prev, days }));
-
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/days")
-      .then((resp) => setDays(resp.data))
-      .catch((error) => {});
-  }, []);
+    axios.all([
+      axios.get("http://localhost:4000/api/days"),
+      axios.get("http://localhost:4000/api/appointments")
+    ])
+      .then((all) => {
+        setState(prev => ({
+          ...prev,
+          days: all[0].data,
+          appointments: all[1].data
+        }))
+      })
+      .catch((error) => {
+        
+        // console.log(error.res.status);
+        // console.log(error.res.headers);
+        // console.log(error.res.data);
+      });
+  }, [])
+
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -91,4 +67,5 @@ export default function Application(props) {
       </section>
     </main>
   );
-}
+  }
+
