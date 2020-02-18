@@ -139,3 +139,7 @@ storiesOf("InterviewerList", module)
       onClose={action("onClose")}
     />
   ))
+  .add("Error saving", () => (
+    <Error message="Could not save appointment." onClose={action("onClose")} />
+  ))
+  
