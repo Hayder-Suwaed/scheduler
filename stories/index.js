@@ -9,7 +9,7 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import Appointment from "components/Appointment"
 import Header from "../src/components/Appointment/Header"
-// import Empty from "components/appointment/Empty";
+import Empty from "components/Appointment/Empty";
 import Show from "../src/components/Appointment/Show";
 import Confirm from "../src/components/Appointment/Confirm";
 import Status from "../src/components/Appointment/Status";
