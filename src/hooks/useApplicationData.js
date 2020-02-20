@@ -50,7 +50,7 @@ export default function useApplicationData() {
       });
   }, []);
 
-  //-------------
+  //
 
   const setDay = (day) =>
     dispatch({
@@ -58,7 +58,7 @@ export default function useApplicationData() {
       value: day
     });
 
-  //-------------
+  //
 
   function bookInterview(id, interview) {
     return axios
