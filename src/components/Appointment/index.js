@@ -2,6 +2,7 @@ import React from "react";
 import useVisualMode from "hooks/useVisualMode";
 import "./styles.scss";
 import Header from "components/Appointment/Header";
+import Error from "components/Appointment/Error";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Form from "components/Appointment/Form";
@@ -15,6 +16,9 @@ export default function Appointment(props) {
   const SAVING = "SAVING";
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -35,6 +39,10 @@ export default function Appointment(props) {
   //Confirm function
   function CONFIRMIt() {
     transition(CONFIRM);
+  }
+  //Edit function
+  function edit() {
+    transition(EDIT);
   }
   //Cancel function and delete an appointent
   function cancel(id) {
@@ -68,6 +76,20 @@ export default function Appointment(props) {
       )}
       {mode === CREATE && (
         <Form interviewers={props.interviewers} onCancel={back} onSave={save} />
+      )}
+
+      {mode === EDIT && (
+        <Form
+          interviewers={props.interviewers}
+          onCancel={back}
+          onSave={(name, interviewer) => save(name, interviewer, true)}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error message={"Could not save the appointment"} onClose={back} />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error message={"Could not delete the appointment"} onClose={back} />
       )}
     </article>
   );
