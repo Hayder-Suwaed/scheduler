@@ -1,6 +1,8 @@
+//Creating Reducers.
 import React, { useState, useEffect, useReducer } from "react";
-import "components/Application.scss";
 import axios from "axios";
+
+// const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
 export default function useApplicationData() {
   const SET_DAY = "SET_DAY";
@@ -31,6 +33,7 @@ export default function useApplicationData() {
         );
     }
   }
+
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
@@ -52,8 +55,8 @@ export default function useApplicationData() {
   };
 
   const setDay = (day) => dispatch({ type: SET_DAY, day });
-
-  function bookInterview(id, interview) {
+  //Booking interview and spots remaining functions
+  function bookInterview(id, interview, isEdit) {
     const daySpot = dayByAppId(id);
     const spotIncrease = (daySpot) => {
       const output = state.days.map((item, index) => {
@@ -67,8 +70,10 @@ export default function useApplicationData() {
       });
       return output;
     };
-
-    const stateDays = spotIncrease(daySpot);
+    let stateDays = state.days;
+    if (!isEdit) {
+      stateDays = spotIncrease(daySpot);
+    }
 
     const appointment = {
       ...state.appointments[id],
@@ -80,17 +85,18 @@ export default function useApplicationData() {
     };
 
     return axios
-      .put(`http://localhost:4000/api/appointments/${id}`, appointment)
-      .then(
-        axios
-          .get("http://localhost:4000/api/days")
-          .then(
-            (res) => dispatch({ type: SET_INTERVIEW, appointments }),
+      .put(`api/appointments/${id}`, { interview: { ...interview } })
+      .then((data) => {
+        return axios.get("api/days").then((res) => {
+          console.log(res);
+          return (
+            dispatch({ type: SET_INTERVIEW, appointments }),
             dispatch({ type: SET_SPOTSREMAINING, stateDays })
-          )
-      );
+          );
+        });
+      });
   }
-
+  //Updating the number of Spots remaining.
   function cancel(id, interview) {
     const daySpot = dayByAppId(id);
 
@@ -117,21 +123,21 @@ export default function useApplicationData() {
     };
 
     return axios
-      .delete(`http://localhost:4000/api/appointments/${id}`)
+      .delete(`api/appointments/${id}`)
       .then(
         (res) => dispatch({ type: SET_INTERVIEW, appointments }),
         dispatch({ type: SET_SPOTSREMAINING, stateDays })
       );
   }
 
+  // Use Promise.all to make both requests(for the days and the appointments data) before updating the state
   useEffect(() => {
     Promise.all([
-      Promise.resolve(axios.get(`http://localhost:4000/api/days`)),
-      Promise.resolve(axios.get(`http://localhost:4000/api/appointments`)),
-      Promise.resolve(axios.get(`http://localhost:4000/api/interviewers`))
+      Promise.resolve(axios.get(`/api/days`)),
+      Promise.resolve(axios.get(`/api/appointments`)),
+      Promise.resolve(axios.get(`/api/interviewers`))
     ])
       .then((res) => {
-        console.log(res);
         dispatch({
           type: SET_APPLICATION_DATA,
           days: res[0].data,
@@ -139,9 +145,37 @@ export default function useApplicationData() {
           interviewers: res[2].data
         });
       })
-
       .catch((error) => console.log(error));
     return () => {};
+  }, []);
+
+
+  useEffect(() => {
+    const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+    webSocket.onopen = function(event) {
+      webSocket.send("ping");
+    };
+
+    webSocket.onmessage = function(event) {
+      const msg = JSON.parse(event.data);
+
+      if (msg.type === "SET_INTERVIEW") {
+        if (msg.interview === null) {
+          dispatch({ type: SET_INTERVIEW, id: msg.id, interview: null });
+        } else {
+          dispatch({
+            type: SET_INTERVIEW,
+            id: msg.id,
+            interview: { ...msg.interview }
+          });
+        }
+      }
+    };
+
+    return () => {
+      webSocket.close();
+    };
   }, []);
 
   return {
