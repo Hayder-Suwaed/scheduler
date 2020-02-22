@@ -1,6 +1,7 @@
 //Creating Reducers.
 import { useEffect, useReducer } from "react";
 import axios from "axios";
+const webSocket = new WebSocket("ws://localhost:4000");
 
 const dayByAppId = (id, days) => {
   let dayByAppointmenID = {};
@@ -14,14 +15,14 @@ const dayByAppId = (id, days) => {
   return dayByAppointmenID;
 };
 
-const spotIncrease = ({ id, interview }, { appointments, days}) => {
+const spotIncrease = ({ id, interview }, { appointments, days }) => {
   let inc;
   if (!interview) {
-    inc = 1
-  } else if(appointments[id].interview) {
-    inc = 0
+    inc = 1;
+  } else if (appointments[id].interview) {
+    inc = 0;
   } else {
-    inc = -1
+    inc = -1;
   }
   const daySpot = dayByAppId(id, days);
   const output = days.map((item, index) => {
@@ -118,11 +119,9 @@ export default function useApplicationData() {
   }, []);
 
   useEffect(() => {
-    const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-
-    webSocket.onopen = function(event) {
-      webSocket.send("ping");
-    };
+    // webSocket.onopen = function(event) {
+    //   webSocket.send("ping");
+    // };
 
     webSocket.onmessage = function(event) {
       const message = JSON.parse(event.data);
