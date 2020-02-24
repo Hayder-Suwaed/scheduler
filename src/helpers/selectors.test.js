@@ -47,19 +47,19 @@ const state = {
     },
     "3": {
       id: 3,
-      "name": "Mildred Nazir",
-      "avatar": "https://i.imgur.com/T2WwVfS.png"
+      name: "Mildred Nazir",
+      avatar: "https://i.imgur.com/T2WwVfS.png"
     },
     "4": {
-      "id": 4,
-      "name": "Cohana Roy",
-      "avatar": "https://i.imgur.com/FK8V841.jpg"
+      id: 4,
+      name: "Cohana Roy",
+      avatar: "https://i.imgur.com/FK8V841.jpg"
     },
     "5": {
-      "id": 5,
-      "name": "Sven Jones",
-      "avatar": "https://i.imgur.com/twYrpay.jpg"
-    },
+      id: 5,
+      name: "Sven Jones",
+      avatar: "https://i.imgur.com/twYrpay.jpg"
+    }
   }
 };
 
@@ -77,8 +77,6 @@ test("getInterview returns an object with the interviewer data", () => {
     })
   );
 });
-
-
 
 /// getInterviewersForDay test
 
@@ -107,4 +105,4 @@ test("getInterviewersForDay returns an empty array when the days data is empty",
 test("getInterviewersForDay returns an empty array when the day is not found", () => {
   const result = getInterviewersForDay(state, "Wednesday");
   expect(result.length).toEqual(0);
-}); 
+});
