@@ -47,13 +47,14 @@ describe("Form", () => {
 
   it("can successfully save after trying to submit an empty student name", () => {
     const onSave = jest.fn();
-    const interviewer = interviewers[0].id
+    const interviewer = interviewers[0].id;
 
     const { getByText, getByPlaceholderText, queryByText } = render(
-      <Form interviewers={interviewers}
-      interviewer = { interviewer }
-      onSave={onSave} />
-      
+      <Form
+        interviewers={interviewers}
+        interviewer={interviewer}
+        onSave={onSave}
+      />
     );
 
     fireEvent.click(getByText("Save"));
@@ -98,6 +99,3 @@ describe("Form", () => {
     expect(onCancel).toHaveBeenCalledTimes(1);
   });
 });
-
-///>>>>>>>>>>>>>
-//>>>>>>>>>>>>>>>>>>>>>
