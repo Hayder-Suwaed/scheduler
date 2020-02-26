@@ -14,11 +14,12 @@ export const INITIAL_STATE = {
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case SET_DAY:
-      return { ...state, day: action.payload };
+   
+
     case SET_APPLICATION_DATA:
       return {
         ...state,
+
         days: action.days,
         appointments: action.appointments,
         interviewers: action.interviewers
@@ -42,3 +43,4 @@ export const reducer = (state, action) => {
       );
   }
 };
+
