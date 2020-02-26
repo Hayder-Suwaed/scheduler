@@ -14,6 +14,8 @@ export const INITIAL_STATE = {
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    // case SET_DAY:
+    //   return { ...state, day: action.payload };
     case SET_DAY:
       return { ...state, day: action.payload };
 
