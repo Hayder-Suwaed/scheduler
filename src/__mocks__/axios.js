@@ -85,17 +85,15 @@ export default {
     }
   }),
   put: jest.fn().mockImplementation(() => {
-    console.log("mochhhhhhhh")
     return Promise.resolve({
-        status: 204,
-        statusText: "No Content",
-    })
-}),
-delete: jest.fn(()=> {
-  return Promise.resolve({
-    status: 204,
-    statusText: "No Content"
-  });
-}
-)
+      status: 204,
+      statusText: "No Content"
+    });
+  }),
+  delete: jest.fn(() => {
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
+    });
+  })
 };
