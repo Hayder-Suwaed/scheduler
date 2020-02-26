@@ -20,6 +20,7 @@ export const reducer = (state, action) => {
     case SET_APPLICATION_DATA:
       return {
         ...state,
+        
         days: action.days,
         appointments: action.appointments,
         interviewers: action.interviewers
@@ -41,5 +42,5 @@ export const reducer = (state, action) => {
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
       );
-  }
+  };
 };
