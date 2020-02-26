@@ -32,8 +32,7 @@ describe("Application", () => {
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
 
-  it.only("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
-    axios.put.mockClear();
+  it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
     const { container, getByText } = render(<Application />);
 
     await waitForElement(() => getByText("Archie Cohen"));
@@ -111,7 +110,9 @@ describe("Application", () => {
     fireEvent.click(getByAltText(appointment, "Edit"));
 
     // 4. Check that the name Archie Cohen is shown.
-    expect(getByDisplayValue(appointment, "Lydia Miller-Jones")).toBeInTheDocument();
+    expect(
+      getByDisplayValue(appointment, "Lydia Miller-Jones")
+    ).toBeInTheDocument();
 
     fireEvent.change(getByDisplayValue(appointment, "Archie Cohen"), {
       target: { value: "New Name" }
@@ -205,7 +206,7 @@ describe("Application", () => {
     ).find((appointment) => queryByText(appointment, "Archie Cohen"));
     fireEvent.click(getByAltText(appointment, "Edit"));
 
-    expect(getByDisplayValue(appointment, "Lydia Miller-Jones")).toBeInTheDocument();
+    expect(getByDisplayValue(appointment, "Archie Cohen")).toBeInTheDocument();
 
     fireEvent.change(getByDisplayValue(appointment, "Archie Cohen"), {
       target: { value: "New Name" }

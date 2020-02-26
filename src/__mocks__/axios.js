@@ -53,11 +53,8 @@ const fixtures = {
   }
 };
 
-//We can collect this data from the API by calling each of the endpoints and
-//generating a static object local to the src/__mocks__/axios.js file
-
 export default {
-  get: jest.fn((url) => {
+  get: jest.fn(url => {
     if (url === "/api/days") {
       return Promise.resolve({
         status: 200,
@@ -67,35 +64,31 @@ export default {
     }
 
     if (url === "/api/appointments") {
-      /* Resolve appointments data */
       return Promise.resolve({
         status: 200,
         statusText: "OK",
         data: fixtures.appointments
-      });
+      })
     }
 
     if (url === "/api/interviewers") {
-      /* Resolve interviewers data */
       return Promise.resolve({
         status: 200,
         statusText: "OK",
         data: fixtures.interviewers
-      });
+      })
     }
   }),
-  put: jest.fn().mockImplementation(() => {
-    console.log("mochhhhhhhh")
+  put: jest.fn(() => {
     return Promise.resolve({
-        status: 204,
-        statusText: "No Content",
+      status: 204,
+      statusText: "No Content"
     })
-}),
-delete: jest.fn(()=> {
-  return Promise.resolve({
-    status: 204,
-    statusText: "No Content"
-  });
+  }),
+  delete: jest.fn(() => {
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
+    })
+  })
 }
-)
-};

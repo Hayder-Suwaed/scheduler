@@ -13,10 +13,8 @@ import Confirm from "../src/components/Appointment/Confirm";
 import Error from "../src/components/Appointment/Error";
 import Button from "components/Button";
 import Show from "../src/components/Appointment/Show";
-import Status from  "components/Appointment/Status";
-import Form from  "components/Appointment/Form";
-
-
+import Status from "components/Appointment/Status";
+import Form from "components/Appointment/Form";
 
 storiesOf("Button", module)
   .addParameters({
@@ -100,7 +98,7 @@ storiesOf("InterviewerListItem", module)
       id={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
-      setInterviewer={event => action("setInterviewer")(interviewer.id)}
+      setInterviewer={(event) => action("setInterviewer")(interviewer.id)}
     />
   ));
 const interviewers = [
@@ -135,13 +133,14 @@ storiesOf("Appointment", module)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
   .add("Header", () => <Header time="12pm" />)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
-  .add("Show", () => <Show
+  .add("Show", () => (
+    <Show
       student="Lydia Miller-Jones"
       interviewer={interviewer}
       onEdit={action("onEdit")}
       onDelete={action("onDelete")}
     />
-  )
+  ))
   .add("Confirm", () => (
     <Confirm
       message="Delete the appointment?"
@@ -176,7 +175,7 @@ storiesOf("Appointment", module)
       onCancel={action("onCancel")}
     />
   ))
- 
+
   .add("Appointment Booked", () => (
     <Fragment>
       <Appointment
@@ -192,5 +191,4 @@ storiesOf("Appointment", module)
       <Appointment id={1} time="12pm" />
       <Appointment id="last" time="1pm" />
     </Fragment>
-  ))
-
+  ));
