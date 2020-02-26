@@ -1,3 +1,5 @@
+//We are going to use a Test Driven Development approach to update how the spots feature displays the remaining spots available.
+//We access these functions by destructuring the object returned by the render function in react-testing-library.
 import React from "react";
 
 import { render, cleanup } from "@testing-library/react";

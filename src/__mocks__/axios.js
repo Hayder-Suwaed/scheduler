@@ -83,5 +83,19 @@ export default {
         data: fixtures.interviewers
       });
     }
-  })
+  }),
+  put: jest.fn().mockImplementation(() => {
+    console.log("mochhhhhhhh")
+    return Promise.resolve({
+        status: 204,
+        statusText: "No Content",
+    })
+}),
+delete: jest.fn(()=> {
+  return Promise.resolve({
+    status: 204,
+    statusText: "No Content"
+  });
+}
+)
 };
