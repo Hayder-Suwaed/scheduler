@@ -38,7 +38,7 @@ export const reducer = (state, action) => {
       return { ...state, days: action.payload };
     default:
       throw new Error(
-        `Tried to reduce with unsupported action type: ${action.type}`
+        `Tried to reduce with unsupported action Type: ${action.type}`
       );
   }
 };
