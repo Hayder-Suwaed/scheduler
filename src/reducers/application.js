@@ -7,8 +7,8 @@ import {
 
 export const INITIAL_STATE = {
   day: "Monday",
-  days: [],
   appointments: {},
+  days: [],
   interviewers: {}
 };
 
