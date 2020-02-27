@@ -35,8 +35,8 @@ export default function Appointment(props) {
       .bookInterview(props.id, interview, isEdit)
       .then(() => transition(SHOW))
       .catch((Error) => {
-        transition(ERROR_SAVE, true)
-      })
+        transition(ERROR_SAVE, true);
+      });
   }
   //---------------Confirm function
   function CONFIRMIt() {
@@ -84,6 +84,9 @@ export default function Appointment(props) {
         <Form
           interviewers={props.interviewers}
           onCancel={back}
+          name={props.interview.student}
+            interviewer={props.interview.interviewer.id}
+          
           onSave={(name, interviewer) => save(name, interviewer, true)}
         />
       )}

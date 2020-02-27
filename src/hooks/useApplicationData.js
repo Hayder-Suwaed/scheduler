@@ -83,9 +83,9 @@ export default function useApplicationData() {
     };
 console.log(id, interview)
     return axios
-      .put(`api/appointments/${id}`, { interview: { ...interview } })
+      .put(`/api/appointments/${id}`, { interview: { ...interview } })
       .then((data) => {
-        return axios.get("api/days").then((res) => {
+        return axios.get("/api/days").then((res) => {
           console.log(res);
           return (
             dispatch({ type: SET_INTERVIEW, appointments }),
